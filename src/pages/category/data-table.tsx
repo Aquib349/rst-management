@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -6,59 +8,92 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { flexRender } from "@tanstack/react-table";
-import { columns } from "@/pages/category/column";
+import Pagination from "@/custom components/pagination";
+import CustomTooltip from "@/custom components/tooltip";
+import { useCategory } from "@/hooks/use-category";
+import { Pencil, Trash2 } from "lucide-react";
+import React, { useState } from "react";
 
 interface DataTableProps {
-  table: any;
+  setEditCategoryModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const DataTable = ({ table }: DataTableProps) => {
+const DataTable = ({ setEditCategoryModal }: DataTableProps) => {
+  const { category, delCategory, getOneCategory } = useCategory();
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 10;
+
+  const lastIndex = itemsPerPage * currentPage;
+  const firstIndex = lastIndex - itemsPerPage;
+  const currentItems = category.slice(firstIndex, lastIndex);
+
   return (
-    <div className="rounded-md border">
-      <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup: any) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header: any) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row: any) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
-                {row.getVisibleCells().map((cell: any) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
+    <>
+      <Card>
+        <CardContent className="p-0 space-y-0">
+          <Table>
+            <TableHeader className="bg-gray-50">
+              <TableRow>
+                <TableHead>Category Name</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </div>
+            </TableHeader>
+            <TableBody>
+              {currentItems.length > 0 ? (
+                currentItems.map((item) => (
+                  <TableRow key={item.id}>
+                    <TableCell className="px-4 py-2">
+                      {item.categoryName}
+                    </TableCell>
+                    <TableCell className="px-4 py-2">
+                      {item.description}
+                    </TableCell>
+                    <TableCell className="px-4 py-2">
+                      <Button
+                        variant="outline"
+                        className="h-8 px-2 text-purple-600 border-0 hover:bg-transparent bg-transparent"
+                        onClick={() => {
+                          setEditCategoryModal(true);
+                          getOneCategory(Number(item.id));
+                        }}
+                      >
+                        <CustomTooltip
+                          trigger={<Pencil size={16} />}
+                          content="Edit"
+                        />
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="h-8 px-2 border-0 text-red-500 hover:bg-transparent bg-transparent"
+                        onClick={() => delCategory(Number(item.id))}
+                      >
+                        <CustomTooltip
+                          trigger={<Trash2 size={16} />}
+                          content="Delete"
+                        />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={3} className="text-center py-4">
+                    No data available
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+      <Pagination
+        itemsPerPage={itemsPerPage}
+        length={category.length}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
+    </>
   );
 };
 

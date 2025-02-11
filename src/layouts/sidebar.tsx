@@ -1,11 +1,9 @@
-// import {
-//   Breadcrumb,
-//   BreadcrumbItem,
-//   BreadcrumbLink,
-//   BreadcrumbList,
-//   BreadcrumbPage,
-//   BreadcrumbSeparator,
-// } from "@/components/ui/breadcrumb";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+} from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
@@ -13,9 +11,10 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/custom components/app-sidebar";
-import { Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
 
 const Sidebar = () => {
+  const location = useLocation();
   return (
     <div className="dashboard-component">
       <div className="main">
@@ -26,20 +25,20 @@ const Sidebar = () => {
               <div className="flex items-center gap-2 px-4">
                 <SidebarTrigger className="-ml-1" />
                 <Separator orientation="vertical" className="mr-2 h-4" />
-                {/* <Breadcrumb>
+                <Breadcrumb>
                   <BreadcrumbList>
                     <BreadcrumbItem className="hidden md:block">
-                      <BreadcrumbLink href="#">
-                        Building Your Application
+                      <BreadcrumbLink className="text-black/50 font-semibold">
+                        {location.pathname === "/"
+                          ? "Dashboard"
+                          : location.pathname
+                              .replace(/^\//, "")
+                              .charAt(0)
+                              .toUpperCase() + location.pathname.slice(2)}
                       </BreadcrumbLink>
                     </BreadcrumbItem>
-                    <BreadcrumbSeparator className="hidden md:block" />
-                    <BreadcrumbItem>
-                      <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                    </BreadcrumbItem>
                   </BreadcrumbList>
-                </Breadcrumb> */}
-                <p>BreadCrumb</p>
+                </Breadcrumb>
               </div>
             </header>
             <div className="flex flex-1 flex-col gap-4 p-4 pt-2">

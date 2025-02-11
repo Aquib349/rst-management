@@ -35,7 +35,7 @@ const CustomFormField = <T extends FieldValues>({
               {...field}
               value={field.value ?? ""}
               placeholder={placeholder}
-              className="rounded bg-transparent border border-gray-600"
+              className="rounded bg-transparent"
             />
           </FormControl>
         </FormItem>

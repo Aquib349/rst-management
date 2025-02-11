@@ -12,6 +12,19 @@ export const getCategory = async (): Promise<Category[] | null> => {
   }
 };
 
+// Get one categories
+export const getSingleCategory = async (
+  categoryId: number
+): Promise<Category[] | null> => {
+  try {
+    const response = await get<Category[]>(`/v1/food-category/${categoryId}`);
+    return response;
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    return null;
+  }
+};
+
 // add new categories
 export const addCategory = async (data: any) => {
   try {
