@@ -6,6 +6,7 @@ import MenuTable from "./menu-table";
 import AddMenuForm from "./add-menu-form";
 import EditMenuForm from "./edit-menu-form";
 import { useMenu } from "@/hooks/use-menu";
+import FoodItemCard from "./menu-small-table";
 
 export default function Menus() {
   const { SingleMenu, filterMenu } = useMenu();
@@ -13,8 +14,8 @@ export default function Menus() {
   const [openEditMenu, setOpenEditMenu] = useState<boolean>(false);
 
   return (
-    <div className="">
-      <div className="flex space-x-4 items-center mb-4">
+    <>
+      <div className="flex flex-wrap gap-4 items-center mb-4">
         <Input
           className="text-2xl w-1/3"
           placeholder="Search menu"
@@ -26,18 +27,21 @@ export default function Menus() {
         >
           + Add Menu
         </Button>
-        <CustomDailogComponent
-          open={openAddMenu}
-          onOpenChange={setOpenAddMenu}
-          title="Add Menu"
-          description=""
-          content={<AddMenuForm setOpenAddMenu={setOpenAddMenu} />}
-          className="min-w-[700px]"
-        />
       </div>
 
       {/* Menu Table */}
       <MenuTable setOpenModal={setOpenEditMenu} />
+      <FoodItemCard setOpenModal={setOpenEditMenu} />
+
+      <CustomDailogComponent
+        open={openAddMenu}
+        onOpenChange={setOpenAddMenu}
+        title="Add Menu"
+        description=""
+        content={<AddMenuForm setOpenAddMenu={setOpenAddMenu} />}
+        className="md:min-w-[700px] min-w-[100px] max-h-screen overflow-y-auto"
+      />
+
       <CustomDailogComponent
         open={openEditMenu}
         onOpenChange={setOpenEditMenu}
@@ -49,8 +53,8 @@ export default function Menus() {
             setOpenEditMenu={setOpenEditMenu}
           />
         }
-        className="min-w-[700px]"
+        className="md:min-w-[700px] max-h-screen overflow-y-auto"
       />
-    </div>
+    </>
   );
 }

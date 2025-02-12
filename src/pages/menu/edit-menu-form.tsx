@@ -73,7 +73,6 @@ const EditMenuForm = ({ SingleMenu, setOpenEditMenu }: EditMenuProps) => {
         description: SingleMenu.description || "",
         remarks: SingleMenu.remarks || "",
         foodCategoryId: SingleMenu.foodCategory?.id || 0,
-        image: SingleMenu.image || "",
         price: SingleMenu.price || 0,
       });
     }
@@ -117,7 +116,7 @@ const EditMenuForm = ({ SingleMenu, setOpenEditMenu }: EditMenuProps) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-        <div className="grid grid-cols-2 items-center gap-4">
+        <div className="grid md:grid-cols-2 items-center gap-4">
           {renderInputField("menuName", "Menu Name")}
 
           <FormField

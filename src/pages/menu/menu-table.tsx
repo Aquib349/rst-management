@@ -9,7 +9,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import React, { SetStateAction, useState } from "react";
+import React, { useState } from "react";
 import { useMenu } from "@/hooks/use-menu";
 import CustomTooltip from "@/custom components/tooltip";
 import VEG from "@/assets/veg.jpg";
@@ -17,7 +17,7 @@ import NONVEG from "@/assets/non-veg.jpg";
 import Pagination from "@/custom components/pagination";
 
 interface MenuTableProps {
-  setOpenModal: React.Dispatch<SetStateAction<boolean>>;
+  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const MenuTable = ({ setOpenModal }: MenuTableProps) => {
@@ -31,7 +31,7 @@ const MenuTable = ({ setOpenModal }: MenuTableProps) => {
 
   return (
     <>
-      <Card>
+      <Card className="hidden md:block">
         <CardContent className="p-0 space-y-0">
           <Table>
             <TableHeader className="bg-gray-50">

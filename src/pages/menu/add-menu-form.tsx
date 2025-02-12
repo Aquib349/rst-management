@@ -52,7 +52,7 @@ const AddMenuForm = ({ setOpenAddMenu }: AddMenuFormProps) => {
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-          <div className="grid grid-cols-2 items-center gap-2">
+          <div className="grid md:grid-cols-2 items-center gap-2">
             <FormField
               control={form.control}
               name="menuName"
