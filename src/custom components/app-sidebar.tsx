@@ -5,6 +5,8 @@ import {
   Logs,
   Newspaper,
   Settings2,
+  TableRowsSplit,
+  Users,
 } from "lucide-react";
 import {
   Sidebar,
@@ -44,6 +46,16 @@ const data = {
       title: "Category",
       url: "/category",
       icon: Newspaper,
+    },
+    {
+      title: "Tables",
+      url: "/table",
+      icon: TableRowsSplit,
+    },
+    {
+      title: "Customers",
+      url: "/customer",
+      icon: Users,
     },
     {
       title: "Settings",
